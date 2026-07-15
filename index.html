@@ -9,49 +9,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --sand:#F5F0E6;
-    --sand-2:#EAE1CE;
-    --card:#FFFDF9;
-    --ink:#2B2924;
-    --ink-soft:#6b6656;
-    --forest:#3F5443;
-    --forest-light:#e7ede8;
-    --copper:#B5673A;
-    --copper-light:#f3e3d8;
-    --line:#DCD2BC;
-    --radius:14px;
+    --sand:#F5F0E6; --sand-2:#EAE1CE; --card:#FFFDF9; --ink:#2B2924; --ink-soft:#6b6656;
+    --forest:#3F5443; --forest-light:#e7ede8; --copper:#B5673A; --copper-light:#f3e3d8;
+    --line:#DCD2BC; --radius:14px;
   }
   *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--sand);
-    color:var(--ink);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.5;
-  }
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.5;}
   .wrap{max-width:1120px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-  h1,h2,h3{font-family:'Space Grotesk', sans-serif;font-weight:600;margin:0;}
-  .num{font-family:'IBM Plex Mono', monospace;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;margin:0;}
+  .num{font-family:'IBM Plex Mono',monospace;}
   header{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;}
   .mark{width:34px;height:34px;flex-shrink:0;}
   header h1{font-size:22px;letter-spacing:-0.01em;}
   header p{margin:2px 0 0;color:var(--ink-soft);font-size:14px;}
-  .frieze{display:block;width:100%;height:14px;margin-bottom:2rem;}
+  .frieze{display:block;width:100%;height:14px;margin-bottom:1.5rem;}
   .frieze polyline{fill:none;stroke:var(--line);stroke-width:1;}
 
-  .grid{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;}
+  .scenario{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+  .scn-toggle{display:flex;gap:6px;background:var(--sand-2);border-radius:10px;padding:4px;}
+  .scn-opt{padding:9px 16px;border-radius:7px;font-size:13.5px;cursor:pointer;color:var(--ink-soft);white-space:nowrap;transition:all .15s;}
+  .scn-opt.active{background:var(--forest);color:#fff;font-weight:500;}
+  .vat-rate{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);}
+  .vat-rate input{width:64px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);}
+
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;}
   @media (max-width:860px){.grid{grid-template-columns:1fr;}}
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:1.25rem 1.4rem;
-    margin-bottom:16px;
-  }
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.25rem 1.4rem;margin-bottom:16px;}
+  .card.muted{opacity:0.55;}
   .card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
   .card-head .tri{width:16px;height:16px;color:var(--forest);flex-shrink:0;}
   .card-head h2{font-size:15px;}
+  .card-head .tag{margin-left:auto;font-size:10.5px;color:var(--ink-soft);border:1px solid var(--line);border-radius:20px;padding:2px 9px;}
 
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .field-row.single{grid-template-columns:1fr;}
@@ -59,38 +48,21 @@
   .field:last-child{margin-bottom:0;}
   .field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;}
   .field .hint{font-size:11px;color:var(--ink-soft);opacity:0.8;margin-top:4px;}
-  input[type=number], select{
-    width:100%;
-    border:1px solid var(--line);
-    background:var(--sand);
-    border-radius:8px;
-    padding:9px 10px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:14px;
-    color:var(--ink);
-  }
-  select{font-family:'IBM Plex Sans', sans-serif;font-size:13.5px;}
+  input[type=number], select{width:100%;border:1px solid var(--line);background:var(--sand);border-radius:8px;padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);}
   input:focus, select:focus{outline:none;border-color:var(--copper);box-shadow:0 0 0 3px var(--copper-light);}
 
+  .vat-check{display:flex;gap:8px;margin-top:7px;}
+  .vat-opt{flex:1;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:11.5px;text-align:center;cursor:pointer;color:var(--ink-soft);transition:all .15s;}
+  .vat-opt.active{border-color:var(--copper);background:var(--copper-light);color:var(--copper);font-weight:500;}
+
   .radio-group{display:flex;gap:8px;}
-  .radio-opt{
-    flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 10px;
-    font-size:12.5px;text-align:center;cursor:pointer;color:var(--ink-soft);
-    transition:all .15s;
-  }
+  .radio-opt{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;text-align:center;cursor:pointer;color:var(--ink-soft);transition:all .15s;}
   .radio-opt.active{border-color:var(--forest);background:var(--forest-light);color:var(--forest);font-weight:500;}
 
-  .summary{
-    background:var(--ink);
-    color:var(--sand);
-    border-radius:var(--radius);
-    padding:1.5rem;
-    position:sticky;
-    top:24px;
-  }
+  .summary{background:var(--ink);color:var(--sand);border-radius:var(--radius);padding:1.5rem;position:sticky;top:24px;}
   .summary .eyebrow{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#B8A98C;margin-bottom:6px;}
-  .summary .price{font-size:40px;font-family:'IBM Plex Mono', monospace;font-weight:500;line-height:1.1;margin-bottom:2px;}
-  .summary .price-sub{font-size:13px;color:#B8A98C;margin-bottom:18px;}
+  .summary .price{font-size:38px;font-family:'IBM Plex Mono',monospace;font-weight:500;line-height:1.1;margin-bottom:2px;}
+  .summary .price-sub{font-size:12.5px;color:#B8A98C;margin-bottom:18px;}
 
   .compbar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin-bottom:8px;}
   .compbar div{height:100%;}
@@ -98,10 +70,20 @@
   .complegend span{font-size:11px;color:#cfc3a9;display:flex;align-items:center;gap:5px;}
   .dot{width:7px;height:7px;border-radius:2px;display:inline-block;}
 
-  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
   .mini{background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;}
   .mini .l{font-size:11px;color:#B8A98C;margin-bottom:3px;}
-  .mini .v{font-size:16px;font-family:'IBM Plex Mono', monospace;}
+  .mini .v{font-size:16px;font-family:'IBM Plex Mono',monospace;}
+
+  .vat-block{border-top:1px solid rgba(255,255,255,0.12);padding-top:14px;margin-bottom:16px;}
+  .vat-block .vh{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#B8A98C;margin-bottom:10px;}
+  .vat-row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:7px;color:#e4dcc8;}
+  .vat-row .num{color:var(--sand);}
+  .vat-row.total{border-top:1px dashed rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;font-size:13.5px;font-weight:500;}
+  .vat-row.total .num{font-weight:600;}
+
+  .export-note{background:var(--forest);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12.5px;color:#eaf1ea;line-height:1.45;}
+  .export-note b{color:#fff;}
 
   .posbar-wrap{border-top:1px solid rgba(255,255,255,0.12);padding-top:16px;}
   .posbar-labels{display:flex;justify-content:space-between;font-size:10.5px;color:#B8A98C;margin-bottom:6px;}
@@ -109,7 +91,8 @@
   .posbar .marker{position:absolute;top:-5px;width:2px;height:16px;background:var(--copper-light);transform:translateX(-50%);}
   .posnote{font-size:12px;color:#cfc3a9;margin-top:10px;}
 
-  footer{margin-top:24px;font-size:12px;color:var(--ink-soft);text-align:center;}
+  .disclaimer{margin-top:18px;font-size:11.5px;color:var(--ink-soft);background:var(--sand-2);border-radius:10px;padding:12px 14px;line-height:1.45;}
+  footer{margin-top:20px;font-size:12px;color:var(--ink-soft);text-align:center;}
 </style>
 </head>
 <body>
@@ -119,11 +102,19 @@
     <svg class="mark" viewBox="0 0 24 24"><polygon points="12,2 22,20 2,20" fill="none" stroke="var(--copper)" stroke-width="1.6"/><polygon points="12,2 17,11 7,11" fill="var(--copper)"/></svg>
     <div>
       <h1>Калькулятор ціни на купольний будинок</h1>
-      <p>Собівартість + невідомі витрати + маржа → ціна продажу</p>
+      <p>Собівартість + маржа + ПДВ → ціна для клієнта</p>
     </div>
   </header>
 
   <svg class="frieze" viewBox="0 0 400 16" preserveAspectRatio="none"><polyline points="0,16 20,0 40,16 60,0 80,16 100,0 120,16 140,0 160,16 180,0 200,16 220,0 240,16 260,0 280,16 300,0 320,16 340,0 360,16 380,0 400,16"/></svg>
+
+  <div class="scenario">
+    <div class="scn-toggle">
+      <div class="scn-opt active" data-scn="ua">Продаж в Україні · ПДВ 20%</div>
+      <div class="scn-opt" data-scn="export">Експорт у ЄС · ПДВ 0%</div>
+    </div>
+    <div class="vat-rate">Ставка ПДВ, % <input type="number" id="vatRate" value="20" step="1" min="0" max="30"></div>
+  </div>
 
   <div class="grid">
     <div>
@@ -137,28 +128,18 @@
           <div class="field">
             <label for="materials">Матеріали, €</label>
             <input type="number" id="materials" value="0" step="100" placeholder="напр. 23000">
+            <div class="vat-check" data-for="materials">
+              <div class="vat-opt active" data-vat="1">з ПДВ</div>
+              <div class="vat-opt" data-vat="0">без ПДВ</div>
+            </div>
           </div>
           <div class="field">
             <label for="labor">Робота заводу, €</label>
             <input type="number" id="labor" value="0" step="100" placeholder="напр. 13000">
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <svg class="tri" viewBox="0 0 24 24"><polygon points="12,3 21,20 3,20" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-          <h2>Одноразові витрати</h2>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="cert">Сертифікація, одноразово €</label>
-            <input type="number" id="cert" value="0" step="500" placeholder="напр. 9000">
-            <div class="hint">Витрата на модель, не на кожен дім</div>
-          </div>
-          <div class="field">
-            <label for="certUnits">Розподілити на, буд/рік</label>
-            <input type="number" id="certUnits" value="40" step="1">
+            <div class="vat-check" data-for="labor">
+              <div class="vat-opt active" data-vat="1">з ПДВ</div>
+              <div class="vat-opt" data-vat="0">без ПДВ</div>
+            </div>
           </div>
         </div>
       </div>
@@ -172,6 +153,10 @@
           <div class="field">
             <label for="opex">Операційні, €/міс</label>
             <input type="number" id="opex" value="0" step="100" placeholder="напр. 10000">
+            <div class="vat-check" data-for="opex">
+              <div class="vat-opt active" data-vat="1">з ПДВ</div>
+              <div class="vat-opt" data-vat="0">без ПДВ</div>
+            </div>
           </div>
           <div class="field">
             <label for="units">Продажів, шт/міс</label>
@@ -184,28 +169,47 @@
       <div class="card">
         <div class="card-head">
           <svg class="tri" viewBox="0 0 24 24"><polygon points="12,3 21,20 3,20" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-          <h2>Логістика та маржа</h2>
+          <h2>Маржа</h2>
+        </div>
+        <div class="field-row single">
+          <div class="field">
+            <label>Цільова маржа, %</label>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="number" id="margin" value="20" step="1" min="0" max="90" style="width:90px;">
+              <div class="radio-group" style="flex:1;">
+                <div class="radio-opt active" data-type="price">від ціни (без ПДВ)</div>
+                <div class="radio-opt" data-type="cost">накрутка на собівартість</div>
+              </div>
+            </div>
+            <div class="hint">Маржа рахується від чистих сум без ПДВ — це реальна економіка</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card muted">
+        <div class="card-head">
+          <svg class="tri" viewBox="0 0 24 24"><polygon points="12,3 21,20 3,20" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <h2>Одноразові та логістика</h2>
+          <span class="tag">зараз не використовується</span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="cert">Сертифікація, одноразово €</label>
+            <input type="number" id="cert" value="0" step="500">
+          </div>
+          <div class="field">
+            <label for="certUnits">Розподілити на, буд/рік</label>
+            <input type="number" id="certUnits" value="40" step="1">
+          </div>
         </div>
         <div class="field-row">
           <div class="field">
             <label for="delivery">Доставка, €</label>
-            <input type="number" id="delivery" value="0" step="50" placeholder="напр. 1400">
+            <input type="number" id="delivery" value="0" step="50">
           </div>
           <div class="field">
             <label for="install">Монтаж, €</label>
             <input type="number" id="install" value="0" step="100">
-          </div>
-        </div>
-        <div class="field-row single">
-          <div class="field">
-            <label>Цільова маржа</label>
-            <div style="display:flex;gap:10px;align-items:center;">
-              <input type="number" id="margin" value="20" step="1" min="0" max="90" style="width:90px;">
-              <div class="radio-group" style="flex:1;">
-                <div class="radio-opt active" data-type="price">від ціни продажу</div>
-                <div class="radio-opt" data-type="cost">накрутка на собівартість</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -213,25 +217,33 @@
     </div>
 
     <div class="summary">
-      <div class="eyebrow">Ціна дому</div>
+      <div class="eyebrow">Ціна для клієнта</div>
       <div class="price num" id="outPrice">€0</div>
-      <div class="price-sub">при заданій марж і поточному обсязі продажів</div>
+      <div class="price-sub" id="priceSub">з ПДВ, при заданій марж і</div>
 
       <div class="compbar" id="compbar"></div>
       <div class="complegend">
         <span><i class="dot" style="background:var(--copper);"></i>Матеріали</span>
         <span><i class="dot" style="background:#8a5a3a;"></i>Робота</span>
-        <span><i class="dot" style="background:#cfc3a9;"></i>Сертифікація</span>
         <span><i class="dot" style="background:#6b6656;"></i>Операційні</span>
-        <span><i class="dot" style="background:var(--forest-light);"></i>Маржа</span>
+        <span><i class="dot" style="background:var(--forest-light);"></i>Прибуток</span>
       </div>
 
       <div class="mini-grid">
-        <div class="mini"><div class="l">Собівартість/шт</div><div class="v num" id="outCost">€0</div></div>
+        <div class="mini"><div class="l">Собівартість/шт (без ПДВ)</div><div class="v num" id="outCost">€0</div></div>
+        <div class="mini"><div class="l">Ціна без ПДВ</div><div class="v num" id="outNet">€0</div></div>
         <div class="mini"><div class="l">Прибуток/дім</div><div class="v num" id="outProfit">€0</div></div>
         <div class="mini"><div class="l">Прибуток/міс</div><div class="v num" id="outMonthly">€0</div></div>
-        <div class="mini"><div class="l">"Під ключ"</div><div class="v num" id="outTurnkey">€0</div></div>
       </div>
+
+      <div class="vat-block">
+        <div class="vh">ПДВ по угоді</div>
+        <div class="vat-row"><span>Вихідний ПДВ (з продажу)</span><span class="num" id="outVatOut">€0</span></div>
+        <div class="vat-row"><span>Вхідний ПДВ (кредит з витрат)</span><span class="num" id="outVatIn">€0</span></div>
+        <div class="vat-row total"><span id="vatPayLabel">До сплати державі</span><span class="num" id="outVatPay">€0</span></div>
+      </div>
+
+      <div class="export-note" id="exportNote" style="display:none;"></div>
 
       <div class="posbar-wrap">
         <div class="posbar-labels"><span>40k € брезент</span><span>100k € преміум</span></div>
@@ -241,11 +253,17 @@
     </div>
   </div>
 
-  <footer>Орієнтовний розрахунок для внутрішнього планування — не бухгалтерська чи інвестиційна консультація.</footer>
+  <div class="disclaimer">
+    Орієнтовний розрахунок для внутрішнього планування. Ставка й наявність ПДВ залежать від класифікації об'єкта (житло / нежитлова будівля / товар) і від того, чи це перше постачання — це впливає на звільнення від ПДВ. Для точних цифр і податкової звітності звертайтесь до бухгалтера. Це не бухгалтерська чи податкова консультація.
+  </div>
+  <footer>Kupolla · внутрішній інструмент планування ціни</footer>
 </div>
 
 <script>
 var marginType = 'price';
+var scenario = 'ua';
+var vatFlags = {materials:1, labor:1, opex:1};
+
 document.querySelectorAll('.radio-opt').forEach(function(el){
   el.addEventListener('click', function(){
     document.querySelectorAll('.radio-opt').forEach(function(o){o.classList.remove('active');});
@@ -255,45 +273,117 @@ document.querySelectorAll('.radio-opt').forEach(function(el){
   });
 });
 
+document.querySelectorAll('.scn-opt').forEach(function(el){
+  el.addEventListener('click', function(){
+    document.querySelectorAll('.scn-opt').forEach(function(o){o.classList.remove('active');});
+    el.classList.add('active');
+    scenario = el.getAttribute('data-scn');
+    calc();
+  });
+});
+
+document.querySelectorAll('.vat-check').forEach(function(grp){
+  var key = grp.getAttribute('data-for');
+  grp.querySelectorAll('.vat-opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      grp.querySelectorAll('.vat-opt').forEach(function(o){o.classList.remove('active');});
+      opt.classList.add('active');
+      vatFlags[key] = parseInt(opt.getAttribute('data-vat'));
+      calc();
+    });
+  });
+});
+
 function fmt(n){ return '€' + Math.round(n).toLocaleString('en-US'); }
 
 function calc(){
+  var r = (parseFloat(document.getElementById('vatRate').value) || 0) / 100;
   var materials = parseFloat(document.getElementById('materials').value) || 0;
   var labor = parseFloat(document.getElementById('labor').value) || 0;
-  var cert = parseFloat(document.getElementById('cert').value) || 0;
-  var certUnits = parseFloat(document.getElementById('certUnits').value) || 1;
   var opex = parseFloat(document.getElementById('opex').value) || 0;
   var units = parseFloat(document.getElementById('units').value) || 1;
-  var delivery = parseFloat(document.getElementById('delivery').value) || 0;
-  var install = parseFloat(document.getElementById('install').value) || 0;
   var margin = parseFloat(document.getElementById('margin').value) || 0;
 
-  var certPerUnit = cert / certUnits;
-  var opexPerUnit = opex / units;
-  var cost = materials + labor + certPerUnit + opexPerUnit;
+  // Розкладаємо кожну витрату на чисту суму + вхідний ПДВ
+  function split(gross, hasVat){
+    if(hasVat && r > 0){
+      var net = gross / (1 + r);
+      return {net: net, vat: gross - net};
+    }
+    return {net: gross, vat: 0};
+  }
+  var m = split(materials, vatFlags.materials);
+  var l = split(labor, vatFlags.labor);
+  var o = split(opex, vatFlags.opex);
 
-  var price;
+  var opexNetPerUnit = o.net / units;
+  var opexVatPerUnit = o.vat / units;
+
+  var netCost = m.net + l.net + opexNetPerUnit;
+  var inputVat = m.vat + l.vat + opexVatPerUnit;
+
+  // Ціна без ПДВ через маржу
+  var netPrice;
   if(marginType === 'price'){
-    price = margin < 100 ? cost / (1 - margin/100) : cost;
+    netPrice = margin < 100 ? netCost / (1 - margin/100) : netCost;
   } else {
-    price = cost * (1 + margin/100);
+    netPrice = netCost * (1 + margin/100);
   }
 
-  var profit = Math.max(price - cost, 0);
-  var monthlyProfit = profit * units;
-  var turnkey = price + delivery + install;
+  // Вихідний ПДВ і ціна для клієнта
+  var outputVat, priceGross;
+  if(scenario === 'ua'){
+    outputVat = netPrice * r;
+    priceGross = netPrice + outputVat;
+  } else {
+    outputVat = 0;
+    priceGross = netPrice; // на експорті ПДВ не додається
+  }
 
-  document.getElementById('outPrice').textContent = fmt(price);
-  document.getElementById('outCost').textContent = fmt(cost);
+  var vatToPay = outputVat - inputVat;
+  var profit = Math.max(netPrice - netCost, 0);
+  var monthlyProfit = profit * units;
+
+  document.getElementById('outPrice').textContent = fmt(priceGross);
+  document.getElementById('outCost').textContent = fmt(netCost);
+  document.getElementById('outNet').textContent = fmt(netPrice);
   document.getElementById('outProfit').textContent = fmt(profit);
   document.getElementById('outMonthly').textContent = fmt(monthlyProfit);
-  document.getElementById('outTurnkey').textContent = fmt(turnkey);
+  document.getElementById('outVatOut').textContent = fmt(outputVat);
+  document.getElementById('outVatIn').textContent = fmt(inputVat);
 
+  var payEl = document.getElementById('outVatPay');
+  var payLabel = document.getElementById('vatPayLabel');
+  if(vatToPay >= 0){
+    payLabel.textContent = 'До сплати державі';
+    payEl.textContent = fmt(vatToPay);
+    payEl.style.color = 'var(--sand)';
+  } else {
+    payLabel.textContent = 'ПДВ до відшкодування (кредит)';
+    payEl.textContent = '+' + fmt(-vatToPay);
+    payEl.style.color = '#a8d5b5';
+  }
+
+  document.getElementById('priceSub').textContent = (scenario === 'ua')
+    ? 'з ПДВ 20%, при заданій марж і'
+    : 'без ПДВ (експорт 0%), при заданій марж і';
+
+  // Підсвітка вигоди експорту
+  var exp = document.getElementById('exportNote');
+  if(scenario === 'export'){
+    var uaGross = netPrice * (1 + r);
+    var saveForClient = uaGross - priceGross;
+    exp.style.display = 'block';
+    exp.innerHTML = 'На експорті клієнт платить <b>' + fmt(priceGross) + '</b> замість <b>' + fmt(uaGross) + '</b> — це <b>' + fmt(saveForClient) + '</b> дешевше (ПДВ не додається). Плюс вхідний ПДВ <b>' + fmt(inputVat) + '</b> повертається як податковий кредит.';
+  } else {
+    exp.style.display = 'none';
+  }
+
+  // Композитна смуга
   var segs = [
-    {v: materials, c: 'var(--copper)'},
-    {v: labor, c: '#8a5a3a'},
-    {v: certPerUnit, c: '#cfc3a9'},
-    {v: opexPerUnit, c: '#6b6656'},
+    {v: m.net, c: 'var(--copper)'},
+    {v: l.net, c: '#8a5a3a'},
+    {v: opexNetPerUnit, c: '#6b6656'},
     {v: profit, c: 'var(--forest-light)'}
   ];
   var total = segs.reduce(function(s,x){return s + x.v;}, 0) || 1;
@@ -306,13 +396,13 @@ function calc(){
     bar.appendChild(d);
   });
 
-  var pct = (price - 40000) / (100000 - 40000);
+  var pct = (priceGross - 40000) / (100000 - 40000);
   pct = Math.max(0, Math.min(1, pct));
   document.getElementById('posMarker').style.left = (pct*100) + '%';
-  document.getElementById('posLabel').textContent = 'Наша ціна ' + fmt(price) + ' — ' + Math.round(pct*100) + '% діапазону конкурентів';
+  document.getElementById('posLabel').textContent = 'Наша ціна ' + fmt(priceGross) + ' — ' + Math.round(pct*100) + '% діапазону конкурентів';
 }
 
-['materials','labor','cert','certUnits','opex','units','delivery','install','margin'].forEach(function(id){
+['vatRate','materials','labor','opex','units','margin'].forEach(function(id){
   document.getElementById(id).addEventListener('input', calc);
 });
 
